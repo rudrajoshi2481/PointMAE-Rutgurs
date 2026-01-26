@@ -1,0 +1,100 @@
+# =============================================================================
+# Point-MAE .gitignore
+# =============================================================================
+
+# Large model checkpoints and weights
+*.pth
+*.pt
+*.ckpt
+*.bin
+*.h5
+*.hdf5
+*.weights
+
+# Preprocessed data cache files
+*.dat
+*.pkl
+*.pickle
+*.npy
+*.npz
+
+# Processed dataset directories (large)
+data/custom_processed/
+data/modelnet40_normal_resampled/
+data/ShapeNet55/
+data/ScanObjectNN/
+
+# Experiment outputs (checkpoints, logs)
+experiments/
+logs/
+runs/
+tensorboard/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Compiled CUDA extensions
+extensions/chamfer_dist/build/
+extensions/chamfer_dist/*.egg-info/
+extensions/emd/build/
+extensions/emd/*.egg-info/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.out
+*.err
+
+# Large PLY mesh files (optional - uncomment if needed)
+# *.ply
+
+# Classification results (can be regenerated)
+classification_results.json
+classification_results.csv
+predictions.csv
+predictions.json
