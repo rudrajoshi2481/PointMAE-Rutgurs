@@ -11,19 +11,23 @@ It measures:
 3. Component-wise breakdown (FPS+KNN, Encoder, Transformer, Classification Head)
 4. Model architecture visualization
 
-REQUIREMENTS:
-- CUDA GPU (uses knn_cuda for FPS and KNN)
-- PyTorch with CUDA support
+REQUIREMENTS (install in order):
+    # Set compiler environment
+    export CC=/usr/bin/gcc-10
+    export CXX=/usr/bin/g++-10
+    export CFLAGS="-I/usr/local/linux-headers-5.4/include"
+    export CPPFLAGS="-I/usr/local/linux-headers-5.4/include"
+    
+    # Install Chamfer Distance
+    cd extensions/chamfer_dist && python setup.py install --user
+    
+    # Install PointNet++ ops
+    pip install "git+https://github.com/erikwijmans/Pointnet2_PyTorch.git#egg=pointnet2_ops&subdirectory=pointnet2_ops_lib"
+    
+    # Install KNN CUDA
+    pip install --upgrade https://github.com/unlimblue/KNN_CUDA/releases/download/0.2/KNN_CUDA-0.2-py3-none-any.whl
 
-USAGE (Single GPU):
-    python tools/benchmark_real_model.py \
-        --config cfgs/finetune_modelnet.yaml \
-        --ckpts <checkpoint_path> \
-        --n_points 8192 \
-        --num_runs 100
-
-USAGE (Multi-GPU - 8xA100):
-    # For benchmarking, use single GPU (multi-GPU adds communication overhead)
+USAGE:
     CUDA_VISIBLE_DEVICES=0 python tools/benchmark_real_model.py \
         --config cfgs/finetune_modelnet.yaml \
         --ckpts <checkpoint_path> \
@@ -48,8 +52,9 @@ import torch.nn as nn
 # Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# Import from the actual Point-MAE codebase
 from utils.config import cfg_from_yaml_file
-from utils import misc
+from models.Point_MAE import PointTransformer
 
 
 # ============================================================================
@@ -382,9 +387,6 @@ def main():
     print("=" * 80)
     
     config = cfg_from_yaml_file(args.config)
-    
-    # Import and build model
-    from models.Point_MAE import PointTransformer
     
     # Create model config
     class ModelConfig:
